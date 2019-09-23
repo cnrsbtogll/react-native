@@ -1,0 +1,3 @@
+rootProject.name = 'firstTemplate'
+
+include ':app'
