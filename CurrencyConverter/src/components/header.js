@@ -13,16 +13,15 @@ export default class Header extends Component {
 }
 const styles = StyleSheet.create({
 header: {
-    height: 80,
-    shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 2,
+    height: 80,   
+    padding:30, 
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5fcff',
+    backgroundColor: '#788B91',
   },
   headerText: {
     fontSize: 20,
+    color:'white',
     textAlign: 'center',
   },
 });
