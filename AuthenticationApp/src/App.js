@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {Button, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import firebase from 'firebase';
 import Banner from './components/banner';
 import LoginForm from './components/loginForm';
-import {Spinner} from './components/common';
+import {Spinner, MyButton} from './components/common';
 
 export default class App extends Component {
   state = {
     loggedIn: null,
   };
-  componentDidMount() {
+  componentWillMount() {
     firebase.initializeApp({
       apiKey: 'AIzaSyBvFUuxK5ZBL-nLEP7yRcYlJUgLoK8Id60',
       authDomain: 'authentication-4de89.firebaseapp.com',
@@ -32,13 +32,13 @@ export default class App extends Component {
 
     switch (loggedIn) {
       case true:
-        return <Button onPress={()=>firebase.auth().signOut()} title="Logout" color="#E87B79"></Button>;
-
+        return (<MyButton spinner={false} onPress={()=>firebase.auth().signOut()} title="Logout" color="#E87B79"></MyButton>)
+        
       case false:
-        return <LoginForm></LoginForm>;
+        return (<LoginForm></LoginForm>)
 
       default:
-        return <Spinner></Spinner>;
+        return (<Spinner></Spinner>)
     }
   }
   render() {

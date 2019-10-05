@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {View, Button, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import firebase from 'firebase';
-import {Input, Spinner} from './common';
+import {Input, MyButton} from './common';
 class LoginForm extends Component {
   state = {
     email: '',
@@ -46,15 +46,7 @@ class LoginForm extends Component {
     const errMsg = error ? (
       <Text style={styles.errorStyle}>{error}</Text>
     ) : null;
-    const loginButton = loading ? (
-      <Spinner></Spinner>
-    ) : (
-      <Button
-        onPress={this.onButtonClicked.bind(this)}
-        color="#E87B79"
-        title="Login"></Button>
-    );
-
+    
     return (
       <View style={{padding: 30}}>
         <View>
@@ -83,7 +75,7 @@ class LoginForm extends Component {
           />
         </View>
         {errMsg}
-        <View>{loginButton}</View>
+        <MyButton spinner={loading} title='Login' onPress={this.onButtonClicked.bind(this)} color='#e87b79'></MyButton>
       </View>
     );
   }
