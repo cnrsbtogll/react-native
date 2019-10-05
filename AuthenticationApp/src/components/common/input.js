@@ -3,6 +3,7 @@ import { Text,TextInput,StyleSheet,View } from 'react-native';
 const Input = ({text,inputPlaceHolder,onChangeText,value,secureTextEntry}) => {
     const {textStyle,inputWrapper,inputStyle}=styles;
     return (
+        
         <View style={inputWrapper}>
             <Text style={textStyle}>{text}</Text>
             <TextInput style={inputStyle} 
