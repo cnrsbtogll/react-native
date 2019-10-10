@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import firebase from 'firebase';
 import {connect} from 'react-redux';
 import {Input, MyButton} from './common';
 import {emailChanged,passwordChanged,loginUser  } from '../actions';
@@ -27,7 +26,7 @@ this.props.loginUser(email, password);
     ) : null;
     
     return (
-      <View style={{padding: 30}}>
+      <View style={styles.loginContainer}>
         <View>
           <Input
             text="Email"
@@ -46,12 +45,17 @@ this.props.loginUser(email, password);
           />
         </View>
         {errMsg}
-        <MyButton spinner={loading} title='Login' onPress={this.onButtonClicked.bind(this)} color='#e87b79'></MyButton>
+        <MyButton spinner={loading}                  title='Login' 
+  onPress={this.onButtonClicked.bind(this)}
+  color='#e87b79'></MyButton>
       </View>
     ) 
   }
 }
 const styles = StyleSheet.create({
+  loginContainer:{
+    flex : 1, justifyContent:'center', padding:30
+  },
   errorStyle: {
     fontSize: 20,
     color: 'red',
@@ -63,10 +67,10 @@ const styles = StyleSheet.create({
 const mapStateToProps=state=>{
   const {email, password,loading,error}=state.auth;
   return{
-    email:email,
-    password:password,
-    loading:loading,
-    error:error,
+    email,
+    password,
+    loading,
+    error,
   }
 }
 export default connect(mapStateToProps, {emailChanged, passwordChanged,loginUser})(LoginForm);

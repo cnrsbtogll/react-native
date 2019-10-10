@@ -1,36 +1,37 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
 import reducers from './reducers';
-import LoginForm from './components/loginForm'
+import Router from './router';
 
 export default class App extends Component {
   componentDidMount(){
     const firebaseConfig = {
-      apiKey: "AIzaSyD5FhptRcmEJyurmIrFEzDNDrbAL2UZuIE",
-      authDomain: "twitterklon-d9b2f.firebaseapp.com",
-      databaseURL: "https://twitterklon-d9b2f.firebaseio.com",
-      projectId: "twitterklon-d9b2f",
-      storageBucket: "",
-      messagingSenderId: "18606348536",
-      appId: "1:18606348536:web:dd2e55646c77c8c778830d",
-      measurementId: "G-7N55HJYFL9"
+      apiKey: "AIzaSyD1U2xf4MglmjGPU3hgUPZK3WgYYYllLRE",
+      authDomain: "tweetterklon.firebaseapp.com",
+      databaseURL: "https://tweetterklon.firebaseio.com",
+      projectId: "tweetterklon",
+      storageBucket: "tweetterklon.appspot.com",
+      messagingSenderId: "664720181789",
+      appId: "1:664720181789:web:23041a003f5f2311bc54f4",
+      measurementId: "G-DJLYX4E6YQ"
     };
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    // firebase.analytics();
+    if(!firebase.apps.length){
+      firebase.initializeApp(firebaseConfig);
+    }
+    
+    
+    //firebase.analytics();
   }
   render() {
-    const store=createStore(reducers,{},  applyMiddleware(ReduxThunk))
+    const store=createStore(reducers, {}, applyMiddleware(ReduxThunk));
     return (
       <Provider store={store}>
-        <View style={{flex:1, backgroundColor:'#ddd', justifyContent:'center'}}>
-          <LoginForm></LoginForm>
-        </View>
-      </Provider>
+          <Router></Router>
+       </Provider>
     );
   }
 }

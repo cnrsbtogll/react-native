@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button, StyleSheet } from 'react-native'
 import {Spinner} from './spinner'
 
-const MyButton = ({spinner,title,onPress,color}) => {
+const MyButton = ({spinner,title,onPress,color, backgroundColor}) => {
     const content = spinner ? (
         <Spinner></Spinner>
     ) : (
@@ -11,9 +11,11 @@ const MyButton = ({spinner,title,onPress,color}) => {
         color={color}
         title={title}></Button>
     )
+    let {buttonWrapper}=styles;
+    buttonWrapper={...buttonWrapper, backgroundColor:backgroundColor || '#eff0ee' }
 
     return (
-        <View style={styles.buttonWrapper}> 
+        <View style={buttonWrapper}> 
             {content}
         </View>
     )
@@ -22,10 +24,10 @@ const styles=StyleSheet.create({
     buttonWrapper:{
         marginTop:20,
         height:49,
-        borderRadius:10,
+        borderRadius:20,
         justifyContent:'center',
         fontSize:18,
-        backgroundColor:'#e87b79'
+        // backgroundColor:'#eff0ee'
     }
 })
 export {MyButton}
