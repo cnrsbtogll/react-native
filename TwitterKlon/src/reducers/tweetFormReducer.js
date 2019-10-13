@@ -1,5 +1,5 @@
 import {
-    TWEET_CHANGED, SEND_TWEET, UPDATE_TWEET,
+    TWEET_CHANGED, SEND_TWEET, UPDATE_TWEET, DELETE_TWEET,
 } from '../actions'
 
 
@@ -14,6 +14,8 @@ export default (state=INITIAL_STATE, action)=>{
             case SEND_TWEET:
             return{...state,...INITIAL_STATE}
             case UPDATE_TWEET:
+                return{...state,...INITIAL_STATE}
+            case DELETE_TWEET:
                 return{...state,...INITIAL_STATE}
         default:
             return state

@@ -7,7 +7,7 @@ import reducers from './reducers';
 import Router from './router';
 
 export default class App extends Component {
-  componentDidMount(){
+  componentWillMount(){
     const firebaseConfig = {
       apiKey: "AIzaSyD1U2xf4MglmjGPU3hgUPZK3WgYYYllLRE",
       authDomain: "tweetterklon.firebaseapp.com",
@@ -19,7 +19,7 @@ export default class App extends Component {
       measurementId: "G-DJLYX4E6YQ"
     };
     // Initialize Firebase
-    if(!firebase.apps.length){
+     if(!firebase.apps.length){
       firebase.initializeApp(firebaseConfig);
     }
     

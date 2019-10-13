@@ -5,6 +5,7 @@ export const TWEET_CHANGED='tweet_changed'
 export const SEND_TWEET='send_tweet'
 export const FETCH_TWEET='fetch_tweet'
 export const UPDATE_TWEET='update_tweet'
+export const DELETE_TWEET='delete_tweet'
 
 const REF_DATABASE='/tweets';
 export const changeTweet=(tweet)=>{
@@ -48,6 +49,17 @@ export const updateTweet = ({tweet,uid,email})=>{
             Actions.main();
             dispatch({
                 type: UPDATE_TWEET
+            })
+        })
+    }
+}
+
+export const deleteTweet=(uid)=>{
+    return dispatch=>{
+        firebase.database().ref(REF_DATABASE + '/' + uid).remove().then(()=>{
+            Actions.main();
+            dispatch({
+                type:DELETE_TWEET
             })
         })
     }

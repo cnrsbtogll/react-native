@@ -12,7 +12,7 @@ const MyButton = ({spinner,title,onPress,color, backgroundColor}) => {
         title={title}></Button>
     )
     let {buttonWrapper}=styles;
-    buttonWrapper={...buttonWrapper, backgroundColor:backgroundColor || '#eff0ee' }
+    buttonWrapper={...buttonWrapper, backgroundColor:backgroundColor || '#e87b79' }
 
     return (
         <View style={buttonWrapper}> 
@@ -24,7 +24,7 @@ const styles=StyleSheet.create({
     buttonWrapper:{
         marginTop:20,
         height:49,
-        borderRadius:20,
+        //borderRadius:20,
         justifyContent:'center',
         fontSize:18,
         // backgroundColor:'#eff0ee'

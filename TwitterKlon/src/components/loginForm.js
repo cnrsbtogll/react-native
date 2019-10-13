@@ -45,7 +45,8 @@ this.props.loginUser(email, password);
           />
         </View>
         {errMsg}
-        <MyButton spinner={loading}                  title='Login' 
+        <MyButton spinner={loading}                  
+        title='Login'         
   onPress={this.onButtonClicked.bind(this)}
   color='#e87b79'></MyButton>
       </View>
