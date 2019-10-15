@@ -6,6 +6,27 @@ export const PASSWORD_CHANGED = 'password_cahanged';
 export const LOGIN_USER_SUCCESS = 'Login_User_Success';
 export const LOGIN = 'Login';
 export const LOGIN_USER_FAILED = 'Login_User_Failed';
+export const LOGGED_IN='logged_in';
+export const NOT_LOGGED_IN='not_logged_in';
+
+export const isLoggedIn=()=>{
+  return dispatch=>{
+    firebase.auth().onAuthStateChanged(user=>{
+      if (user){
+        Actions.main();
+        dispatch({
+          type:LOGGED_IN,
+          payload: user
+        })
+      } else{
+       
+        dispatch({
+          type:NOT_LOGGED_IN
+        })
+      }
+    })
+  }
+}
 
 export const emailChanged = (text) => {
   return {

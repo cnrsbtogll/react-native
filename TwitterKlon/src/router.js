@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import firebase from 'firebase';
 import {Scene, Router, Actions} from 'react-native-router-flux';
 import LoginForm from './components/loginForm';
 import Tweets from './components/tweets';
@@ -16,13 +17,19 @@ const RouterComp = () => {
             component={LoginForm}
             title="Login"
             hideNavBar={true}
-            initial></Scene>
+            ></Scene>
         </Scene>
-        <Scene key="main" style={styles.navigationBarTitleStyle}>
+        <Scene key="main" 
+        style={styles.navigationBarTitleStyle} >
           <Scene key="tweets" component={Tweets} title="Tweets" 
           rightTitle='New'
           onRight={()=>Actions.newTweet()}
-           initial></Scene>
+          onLeft={()=>{
+            firebase.auth().signOut();
+            firebase.auth();
+          }}
+          leftTitle='Logout'
+           ></Scene>
           <Scene
           key="newTweet"
           component={NewTweet}

@@ -3,12 +3,17 @@ import React, {Component} from 'react';
 import {Text, View, FlatList,StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux'
-import {fetchTweet} from '../actions';
+import {fetchTweet, isLoggedIn} from '../actions';
 import {Card} from './common';
 
 class Tweets extends Component {
-  componentDidMount() {
-    this.props.fetchTweet();
+  // componentDidMount() {
+  //   this.props.isLoggedIn();
+  // }
+  componentDidUpdate(){
+    if(this.props.user){
+      this.props.fetchTweet() 
+    }
   }
   renderItem({item}) {
     return (
@@ -60,9 +65,9 @@ const mapStateToProps = state => {
     return {...val, uid};
   });
   return {
-    tweetList,
+    tweetList
   };
 };
 export default connect(
   mapStateToProps,
-  {fetchTweet})(Tweets);
+  {fetchTweet, isLoggedIn})(Tweets);
