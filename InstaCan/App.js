@@ -1,114 +1,108 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import { AsyncStorage, Modal, Platform, StyleSheet, View } from 'react-native';
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Comments from './screens/Comments';
+import Feed from './screens/Feed';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+const ASYNC_STORAGE_COMMENTS_KEY = 'ASYNC_STORAGE_COMMENTS_KEY';
+
+export default class App extends React.Component {
+  state = {
+    commentsForItem: {},
+    showModal: false,
+    selectedItemId: null,
+  };
+
+  async componentDidMount() {
+    try {
+      const commentsForItem = await AsyncStorage.getItem(
+        ASYNC_STORAGE_COMMENTS_KEY,
+      );
+
+      this.setState({
+        commentsForItem: commentsForItem ? JSON.parse(commentsForItem) : {},
+      });
+    } catch (e) {
+      console.log('Failed to load comments');
+    }
+  }
+
+  onSubmitComment = text => {
+    const { selectedItemId, commentsForItem } = this.state;
+    const comments = commentsForItem[selectedItemId] || [];
+
+    const updated = {
+      ...commentsForItem,
+      [selectedItemId]: [...comments, text],
+    };
+
+    this.setState({ commentsForItem: updated });
+
+    try {
+      AsyncStorage.setItem(ASYNC_STORAGE_COMMENTS_KEY, JSON.stringify(updated));
+    } catch (e) {
+      console.log('Failed to save comment', text, 'for', selectedItemId);
+    }
+  };
+
+  openCommentScreen = id => {
+    this.setState({
+      showModal: true,
+      selectedItemId: id,
+    });
+  };
+
+  closeCommentScreen = () => {
+    this.setState({
+      showModal: false,
+      selectedItemId: null,
+    });
+  };
+
+  render() {
+    const { commentsForItem, showModal, selectedItemId } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <Feed
+          style={styles.feed}
+          commentsForItem={commentsForItem}
+          onPressComments={this.openCommentScreen}
+        />
+        <Modal
+          visible={showModal}
+          animationType="slide"
+          onRequestClose={this.closeCommentScreen}
+        >
+          <Comments
+            style={styles.comments}
+            comments={commentsForItem[selectedItemId] || []}
+            onClose={this.closeCommentScreen}
+            onSubmitComment={this.onSubmitComment}
+          />
+        </Modal>
+      </View>
+    );
+  }
+}
+
+const platformVersion =
+  Platform.OS === 'ios' ? parseInt(Platform.Version, 10) : Platform.Version;
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  feed: {
+    flex: 1,
+    marginTop:0,
+     
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  comments: {
+    flex: 1,
+    marginTop:0,
+     
   },
 });
-
-export default App;
