@@ -19,10 +19,10 @@ export const sendTweet = (tweet)=>{
 const currentUser= firebase.auth().currentUser;
 const email= currentUser.email;
 
-return (dispacth) =>{
+return (dispatch) =>{
     firebase.database().ref(REF_DATABASE).push({email, tweet}).then(()=>{
         Actions.main();
-        dispacth({
+        dispatch({
             type: SEND_TWEET 
         })
     })

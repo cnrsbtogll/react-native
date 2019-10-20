@@ -3,9 +3,9 @@ import {Actions } from 'react-native-router-flux';
 
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_cahanged';
-export const LOGIN_USER_SUCCESS = 'Login_User_Success';
-export const LOGIN = 'Login';
-export const LOGIN_USER_FAILED = 'Login_User_Failed';
+export const LOGIN_USER_SUCCESS = 'login_user_success';
+export const LOGIN = 'login';
+export const LOGIN_USER_FAILED = 'login_user_failed';
 export const LOGGED_IN='logged_in';
 export const NOT_LOGGED_IN='not_logged_in';
 
