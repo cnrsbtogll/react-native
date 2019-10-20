@@ -7,13 +7,8 @@ import {fetchTweet, isLoggedIn} from '../actions';
 import {Card} from './common';
 
 class Tweets extends Component {
-  // componentDidMount() {
-  //   this.props.isLoggedIn();
-  // }
-  componentDidUpdate(){
-    if(this.props.user){
-      this.props.fetchTweet() 
-    }
+   componentDidMount() {
+    this.props.fetchTweet();
   }
   renderItem({item}) {
     return (
@@ -56,7 +51,8 @@ tweetStyle:{
 emailStyle:{
   color:'#AAb1b4',
   fontSize:14,
-  alignSelf:'flex-end'
+  alignSelf:'flex-end',
+  paddingTop:3
 }
 })
 
@@ -70,4 +66,4 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  {fetchTweet, isLoggedIn})(Tweets);
+  {fetchTweet})(Tweets);
